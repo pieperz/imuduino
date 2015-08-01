@@ -8,15 +8,15 @@
 	</head>
 	<body>
 	  <div id="controls">
-	    <button id="start_record" data-event="start">Start</button>
-	    <button id="stop_record" data-event="stop" class="disabled">Stop</button>
+	    <button id="start_record" onclick="start()">Start</button>
+	    <button id="stop_record" onclick="stop()">Stop</button>
 	  </div>
-	  <div id="charts">
+	  <!-- <div id="charts">
 	    <div id="accel" class="epoch small_chart"></div>
 	    <div id="gyro" class="epoch small_chart"></div>
 	    <div id="mag" class="epoch small_chart"></div>
 	  <div id="display">
-	  </div>
+	  </div> -->
           <script src="/socket.io/socket.io.js"></script>
           <script src="raw.js"></script>
 	</body>

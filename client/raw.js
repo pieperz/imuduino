@@ -2,9 +2,13 @@
 /* jshint jquery: true */
 /* jshint unused: false */
 /* global io */
-var d3 = require('d3')
-window.jQuery = require('jquery')
-require('../contrib/epoch/epoch.min.js')
+//var d3 = require('d3')
+var $ = require('jquery')
+
+
+var isSaving = false;
+var start_record = document.getElementById('start_record');
+var stop_record = document.getElementById('stop_record');
 
 var accelData = [
   {
@@ -21,16 +25,32 @@ var accelData = [
   }
 ]
 
-var accelChart = $('#accel').epoch({
-  type: 'time.line',
-  data: accelData
-})
+// var accelChart = $('#accel').epoch({
+//   type: 'time.line',
+//   data: accelData
+// })
+
+var start = function() {
+  console.log('Start');
+  isSaving = true;
+}
+start_record.onclick = start;
+
+var stop = function() {
+    console.log('Stop');
+    isSaving = false;
+    console.log(accelData);
+}
+stop_record.onclick = stop;
 
 var socket = io.connect()
-socket.on('position', function (data) {
-  accelChart.push([
-    {time: data.time, y: data.accel_x},
-    {time: data.time, y: data.accel_y},
-    {time: data.time, y: data.accel_z}
-  ])
+socket.on('pyr', function (data) {
+  console.log(data);
+  if (isSaving === true) {
+    accelData.push([
+      {time: data.time, y: data.accel_x},
+      {time: data.time, y: data.accel_y},
+      {time: data.time, y: data.accel_z}
+    ])
+  }
 })
